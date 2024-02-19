@@ -12,3 +12,10 @@ CREATE TABLE users
     PRIMARY KEY (username),
     UNIQUE (token)
 );
+
+CREATE TABLE departments
+(
+    code VARCHAR(4) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    PRIMARY KEY (code)
+);
