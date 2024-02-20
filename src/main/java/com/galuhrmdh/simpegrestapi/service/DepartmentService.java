@@ -1,9 +1,14 @@
 package com.galuhrmdh.simpegrestapi.service;
 
 import com.galuhrmdh.simpegrestapi.entity.Department;
+import com.galuhrmdh.simpegrestapi.model.DepartmentRequest;
 import com.galuhrmdh.simpegrestapi.model.DepartmentResponse;
 import com.galuhrmdh.simpegrestapi.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +28,13 @@ public class DepartmentService {
     }
 
     @Transactional(readOnly = true)
-    public List<DepartmentResponse> list() {
-        List<Department> departments = departmentRepository.findAll();
+    public Page<DepartmentResponse> list(DepartmentRequest request) {
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
+        Page<Department> departments = departmentRepository.findAll(pageable);
 
-        return departments.stream().map(this::toDepartmentResponse).toList();
+        List<DepartmentResponse> departmentResponses = departments.stream().map(this::toDepartmentResponse).toList();
+
+        return new PageImpl<>(departmentResponses, pageable, departments.getTotalElements());
     }
 
 }

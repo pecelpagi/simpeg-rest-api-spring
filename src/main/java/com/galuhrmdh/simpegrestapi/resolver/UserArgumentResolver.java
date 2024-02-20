@@ -23,7 +23,6 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        log.info("CLASSSSSSS {}", parameter.getParameterType());
         return User.class.equals(parameter.getParameterType());
     }
 

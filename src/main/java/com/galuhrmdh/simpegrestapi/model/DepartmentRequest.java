@@ -1,5 +1,6 @@
 package com.galuhrmdh.simpegrestapi.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WebResponse<T> {
+public class DepartmentRequest {
 
-    private T data;
+    @NotNull
+    private Integer page;
 
-    private String errors;
-
-    private PagingResponse paging;
+    @NotNull
+    private Integer size;
 }
