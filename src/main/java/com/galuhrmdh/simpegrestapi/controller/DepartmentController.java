@@ -26,10 +26,12 @@ public class DepartmentController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<List<DepartmentResponse>> list(User user,
+                                                      @RequestParam(value = "search", required = false) String search,
                                                       @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                                                       @RequestParam(value = "size", required = false, defaultValue = "5") Integer size
     ) {
         DepartmentRequest request = DepartmentRequest.builder()
+                .search(search)
                 .page(page)
                 .size(size)
                 .build();

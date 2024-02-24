@@ -17,4 +17,6 @@ public class DepartmentRequest {
 
     @NotNull
     private Integer size;
+
+    private String search;
 }
