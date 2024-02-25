@@ -93,15 +93,30 @@ CREATE table employees
 
 CREATE TABLE contracts
 (
-    id         INT          NOT NULL AUTO_INCREMENT,
-    employee_id       CHAR(16) NOT NULL,
+    id                      INT NOT NULL AUTO_INCREMENT,
+    employee_id             CHAR(16) NOT NULL,
     --    contract_status: {
     --        C: Contract
     --        P: Permanent
     --    }
-    contract_status     ENUM('C', 'P') NOT NULL,
-    start_date          DATE NOT NULL,
+    contract_status         ENUM('C', 'P') NOT NULL,
+    start_date              DATE NOT NULL,
     contract_length_month   TINYINT(3) NOT NULL,
     PRIMARY KEY (id),
+    FOREIGN KEY (employee_id) REFERENCES employees (id_number)
+);
+
+CREATE TABLE spouses
+(
+    id_number               CHAR(16) NOT NULL,
+    name                    VARCHAR(100) NOT NULL,
+    birthplace              VARCHAR(100) NOT NULL,
+    birthdate               DATE NOT NULL,
+    date_of_marriage        DATE NOT NULL,
+    spouse_sequence         TINYINT(2) NOT NULL,
+    last_education          CHAR(3) NOT NULL,
+    occupation              VARCHAR(30) NOT NULL,
+    employee_id             CHAR(16) NOT NULL,
+    PRIMARY KEY (id_number),
     FOREIGN KEY (employee_id) REFERENCES employees (id_number)
 );
