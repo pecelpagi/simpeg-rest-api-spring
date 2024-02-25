@@ -90,3 +90,18 @@ CREATE table employees
     PRIMARY KEY (id_number),
     FOREIGN KEY (employee_position_id) REFERENCES employee_positions (id)
 );
+
+CREATE TABLE contracts
+(
+    id         INT          NOT NULL AUTO_INCREMENT,
+    employee_id       CHAR(16) NOT NULL,
+    --    contract_status: {
+    --        C: Contract
+    --        P: Permanent
+    --    }
+    contract_status     ENUM('C', 'P') NOT NULL,
+    start_date          DATE NOT NULL,
+    contract_length_month   TINYINT(3) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_id) REFERENCES employees (id_number)
+);
