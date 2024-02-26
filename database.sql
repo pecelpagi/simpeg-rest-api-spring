@@ -182,3 +182,19 @@ CREATE TABLE educations
     PRIMARY KEY (id),
     FOREIGN KEY (employee_id)   REFERENCES employees (id_number)
 );
+
+CREATE TABLE work_experiences
+(
+    id                          INT NOT NULL AUTO_INCREMENT,
+    company_name                VARCHAR(100) NOT NULL,
+    type                        VARCHAR(30) NOT NULL,
+    location                    VARCHAR(100) NOT NULL,
+    department                  VARCHAR(50) NOT NULL,
+    employee_position_id        INT NOT NULL,
+    initial_period              DATE NOT NULL,
+    final_period                DATE NOT NULL,
+    employee_id                 CHAR(16) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_id)   REFERENCES employees (id_number),
+    FOREIGN KEY (employee_position_id) REFERENCES employee_positions (id)
+);
