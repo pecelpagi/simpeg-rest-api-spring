@@ -198,3 +198,23 @@ CREATE TABLE work_experiences
     FOREIGN KEY (employee_id)   REFERENCES employees (id_number),
     FOREIGN KEY (employee_position_id) REFERENCES employee_positions (id)
 );
+
+CREATE TABLE warning_letters
+(
+    id                                  INT NOT NULL AUTO_INCREMENT,
+    date_facing_hrd                     DATE NOT NULL,
+--    regarding: {
+--        R: Reprimand
+--        W1: Warning 1
+--        W2: Warning 2
+--        W3: Warning 3
+--        S: Suspension
+--    }
+    regarding                           ENUM('R', 'W1', 'W2', 'W3', 'S') NOT NULL,
+    violation_1                         VARCHAR(100),
+    violation_2                         VARCHAR(100),
+    suspension_period                   DATE,
+    employee_id                         CHAR(16) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_id)           REFERENCES employees (id_number)
+);
