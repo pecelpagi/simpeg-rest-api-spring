@@ -120,3 +120,28 @@ CREATE TABLE spouses
     PRIMARY KEY (id_number),
     FOREIGN KEY (employee_id) REFERENCES employees (id_number)
 );
+
+CREATE TABLE children
+(
+    id_number               CHAR(16) NOT NULL,
+    name                    VARCHAR(100) NOT NULL,
+    birthplace              VARCHAR(100) NOT NULL,
+    birthdate               DATE NOT NULL,
+--    gender: {
+--        M: Male
+--        F: Female
+--    }
+    gender                  ENUM('M', 'F') NOT NULL,
+    child_sequence          TINYINT(2) NOT NULL,
+    last_education          CHAR(3) NOT NULL,
+    occupation              VARCHAR(30) NOT NULL,
+--    child_status: {
+--        BC: Biological Child
+--        SC: Step Child
+--        AC: Adopted Child
+--    }
+    child_status            ENUM('BC', 'SC', 'AC') NOT NULL,
+    employee_id             CHAR(16) NOT NULL,
+    PRIMARY KEY (id_number),
+    FOREIGN KEY (employee_id) REFERENCES employees (id_number)
+);
