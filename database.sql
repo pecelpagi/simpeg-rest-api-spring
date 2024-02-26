@@ -145,3 +145,25 @@ CREATE TABLE children
     PRIMARY KEY (id_number),
     FOREIGN KEY (employee_id) REFERENCES employees (id_number)
 );
+
+CREATE TABLE parents
+(
+    id_number               CHAR(16) NOT NULL,
+    name                    VARCHAR(100) NOT NULL,
+    birthplace              VARCHAR(100) NOT NULL,
+    birthdate               DATE NOT NULL,
+--    gender: {
+--        M: Male
+--        F: Female
+--    }
+    gender                  ENUM('M', 'F') NOT NULL,
+    last_education          CHAR(3) NOT NULL,
+    occupation              VARCHAR(30) NOT NULL,
+--    parent_status: {
+--        BF: Biological Father
+--        BM: Biological Mother
+--    }
+    parent_status            ENUM('BF', 'BM') NOT NULL,
+    PRIMARY KEY (id_number),
+    FOREIGN KEY (employee_id) REFERENCES employees (id_number)
+);
