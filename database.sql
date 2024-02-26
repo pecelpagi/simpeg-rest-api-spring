@@ -148,22 +148,37 @@ CREATE TABLE children
 
 CREATE TABLE parents
 (
-    id_number               CHAR(16) NOT NULL,
-    name                    VARCHAR(100) NOT NULL,
-    birthplace              VARCHAR(100) NOT NULL,
-    birthdate               DATE NOT NULL,
+    id_number                   CHAR(16) NOT NULL,
+    name                        VARCHAR(100) NOT NULL,
+    birthplace                  VARCHAR(100) NOT NULL,
+    birthdate                   DATE NOT NULL,
 --    gender: {
 --        M: Male
 --        F: Female
 --    }
-    gender                  ENUM('M', 'F') NOT NULL,
-    last_education          CHAR(3) NOT NULL,
-    occupation              VARCHAR(30) NOT NULL,
+    gender                      ENUM('M', 'F') NOT NULL,
+    last_education              CHAR(3) NOT NULL,
+    occupation                  VARCHAR(30) NOT NULL,
 --    parent_status: {
 --        BF: Biological Father
 --        BM: Biological Mother
 --    }
-    parent_status            ENUM('BF', 'BM') NOT NULL,
+    parent_status               ENUM('BF', 'BM') NOT NULL,
+    employee_id                 CHAR(16) NOT NULL,
     PRIMARY KEY (id_number),
-    FOREIGN KEY (employee_id) REFERENCES employees (id_number)
+    FOREIGN KEY (employee_id)   REFERENCES employees (id_number)
+);
+
+CREATE TABLE educations
+(
+    id                          INT NOT NULL AUTO_INCREMENT,
+    education_level             CHAR(3) NOT NULL,
+    major                       VARCHAR(30) NOT NULL,
+    name                        VARCHAR(100) NOT NULL,
+    location                    VARCHAR(100) NOT NULL,
+    graduation_year             TINYINT(4) NOT NULL,
+    certificate_number          VARCHAR(25) NOT NULL,
+    employee_id                 CHAR(16) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_id)   REFERENCES employees (id_number)
 );
