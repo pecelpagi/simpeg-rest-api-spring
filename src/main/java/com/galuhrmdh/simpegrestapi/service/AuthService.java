@@ -27,7 +27,7 @@ public class AuthService {
     public TokenResponse login(LoginUserRequest request) {
         validationService.validate(request);
 
-        User user = userRepository.findById(request.getUsername())
+        User user = userRepository.findFirstByUsername(request.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Username or password wrong"));
 
         if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {

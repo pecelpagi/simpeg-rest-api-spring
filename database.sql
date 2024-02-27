@@ -4,23 +4,27 @@ USE db_simpeg_development;
 
 CREATE TABLE users
 (
-    username    VARCHAR(100) NOT NULL,
-    password    VARCHAR(100) NOT NULL,
-    name        VARCHAR(100) NOT NULL,
-    token       VARCHAR(100),
+    id                  INT          NOT NULL AUTO_INCREMENT,
+    username            VARCHAR(100) NOT NULL,
+    password            VARCHAR(100) NOT NULL,
+    name                VARCHAR(100) NOT NULL,
+    token               VARCHAR(100),
     token_expired_at    BIGINT,
-    PRIMARY KEY (username),
+    PRIMARY KEY (id),
+    UNIQUE (username),
     UNIQUE (token)
 );
 
 CREATE TABLE departments
 (
-    code VARCHAR(4) NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    PRIMARY KEY (code)
+    id          INT          NOT NULL AUTO_INCREMENT,
+    code        VARCHAR(4)   NOT NULL,
+    name        VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (code)
 );
 
-INSERT INTO departments VALUES
+INSERT INTO departments(code, name) VALUES
 ("HRD", "Human Resources Department"),
 ("FAT", "Finance Accounting & Tax"),
 ("GA", "General Affair"),
@@ -47,6 +51,7 @@ INSERT INTO employee_positions VALUES
 
 CREATE table employees
 (
+    id                      INT          NOT NULL AUTO_INCREMENT,
     id_number               CHAR(16) NOT NULL,
     name                    VARCHAR(100) NOT NULL,
 --    gender: {
@@ -54,7 +59,7 @@ CREATE table employees
 --        F: Female
 --    }
     gender                  ENUM('M', 'F') NOT NULL,
-    department_code         VARCHAR(4) NOT NULL,
+    department_code         CHAR(4) NOT NULL,
     entry_date              DATE NOT NULL,
     address                 VARCHAR(255) NOT NULL,
     city                    VARCHAR(100) NOT NULL,
@@ -81,14 +86,15 @@ CREATE table employees
     --        M: Married
     --    }
     marital_status          ENUM('S', 'M') NOT NULL,
-    income_tax_status       ENUM('TK', 'K/0', 'K/1', 'K/2', 'K/3') NOT NULL,
+    income_tax_status       ENUM('TK', 'K_0', 'K_1', 'K_2', 'K_3') NOT NULL,
     blood_type              ENUM('A', 'AB', 'B', 'O') NOT NULL,
     bpjs_health             CHAR(16),
     bpjs_employment         CHAR(16),
     bpjs_retirement         CHAR(16),
     profile_picture         VARCHAR(100),
-    PRIMARY KEY (id_number),
-    FOREIGN KEY (employee_position_id) REFERENCES employee_positions (id)
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_position_id) REFERENCES employee_positions (id),
+    UNIQUE (id_number)
 );
 
 CREATE TABLE contracts
@@ -108,6 +114,7 @@ CREATE TABLE contracts
 
 CREATE TABLE spouses
 (
+    id                      INT NOT NULL AUTO_INCREMENT,
     id_number               CHAR(16) NOT NULL,
     name                    VARCHAR(100) NOT NULL,
     birthplace              VARCHAR(100) NOT NULL,
@@ -117,12 +124,14 @@ CREATE TABLE spouses
     last_education          CHAR(3) NOT NULL,
     occupation              VARCHAR(30) NOT NULL,
     employee_id             CHAR(16) NOT NULL,
-    PRIMARY KEY (id_number),
-    FOREIGN KEY (employee_id) REFERENCES employees (id_number)
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_id) REFERENCES employees (id_number),
+    UNIQUE (id_number)
 );
 
 CREATE TABLE children
 (
+    id                      INT NOT NULL AUTO_INCREMENT,
     id_number               CHAR(16) NOT NULL,
     name                    VARCHAR(100) NOT NULL,
     birthplace              VARCHAR(100) NOT NULL,
@@ -142,12 +151,14 @@ CREATE TABLE children
 --    }
     child_status            ENUM('BC', 'SC', 'AC') NOT NULL,
     employee_id             CHAR(16) NOT NULL,
-    PRIMARY KEY (id_number),
-    FOREIGN KEY (employee_id) REFERENCES employees (id_number)
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_id) REFERENCES employees (id_number),
+    UNIQUE (id_number)
 );
 
 CREATE TABLE parents
 (
+    id                          INT NOT NULL AUTO_INCREMENT,
     id_number                   CHAR(16) NOT NULL,
     name                        VARCHAR(100) NOT NULL,
     birthplace                  VARCHAR(100) NOT NULL,
@@ -165,8 +176,9 @@ CREATE TABLE parents
 --    }
     parent_status               ENUM('BF', 'BM') NOT NULL,
     employee_id                 CHAR(16) NOT NULL,
-    PRIMARY KEY (id_number),
-    FOREIGN KEY (employee_id)   REFERENCES employees (id_number)
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_id)   REFERENCES employees (id_number),
+    UNIQUE (id_number)
 );
 
 CREATE TABLE educations
