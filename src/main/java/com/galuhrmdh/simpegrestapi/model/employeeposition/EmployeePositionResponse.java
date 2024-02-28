@@ -1,4 +1,4 @@
-package com.galuhrmdh.simpegrestapi.model;
+package com.galuhrmdh.simpegrestapi.model.employeeposition;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,13 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class SavedResponse {
+public class EmployeePositionResponse {
 
     private Integer id;
 
-    private String label;
+    private String name;
 
 }

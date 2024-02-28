@@ -1,5 +1,6 @@
-package com.galuhrmdh.simpegrestapi.model;
+package com.galuhrmdh.simpegrestapi.model.employeeposition;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SavedResponse {
+public class UpdateEmployeePositionRequest {
 
     private Integer id;
 
-    private String label;
+    @NotBlank
+    private String name;
 
 }
