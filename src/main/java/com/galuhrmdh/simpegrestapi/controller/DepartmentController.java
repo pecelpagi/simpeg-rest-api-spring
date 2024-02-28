@@ -1,17 +1,12 @@
 package com.galuhrmdh.simpegrestapi.controller;
 
 import com.galuhrmdh.simpegrestapi.entity.User;
-import com.galuhrmdh.simpegrestapi.model.DepartmentRequest;
-import com.galuhrmdh.simpegrestapi.model.DepartmentResponse;
-import com.galuhrmdh.simpegrestapi.model.PagingResponse;
-import com.galuhrmdh.simpegrestapi.model.WebResponse;
+import com.galuhrmdh.simpegrestapi.model.*;
 import com.galuhrmdh.simpegrestapi.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,7 +25,7 @@ public class DepartmentController {
                                                       @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                                                       @RequestParam(value = "size", required = false, defaultValue = "5") Integer size
     ) {
-        DepartmentRequest request = DepartmentRequest.builder()
+        ListRequest request = ListRequest.builder()
                 .search(search)
                 .page(page)
                 .size(size)
@@ -47,4 +42,36 @@ public class DepartmentController {
                 .build();
     }
 
+    @PostMapping(
+            path = "/api/departments",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<SavedResponse> create(User user, @RequestBody CreateDepartmentRequest request) {
+        SavedResponse savedResponse = departmentService.create(request);
+
+        return WebResponse.<SavedResponse>builder().data(savedResponse).build();
+    }
+
+    @PutMapping(
+            path = "/api/departments/{departmentId}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<SavedResponse> update(User user, @RequestBody UpdateDepartmentRequest request, @PathVariable("departmentId") Integer departmentId) {
+        request.setId(departmentId);
+        SavedResponse savedResponse = departmentService.update(request);
+
+        return WebResponse.<SavedResponse>builder().data(savedResponse).build();
+    }
+
+    @DeleteMapping(
+            path = "/api/departments/{departmentId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<String> delete(User user, @PathVariable("departmentId") Integer departmentId) {
+        departmentService.delete(departmentId);
+
+        return WebResponse.<String>builder().data("OK").build();
+    }
 }

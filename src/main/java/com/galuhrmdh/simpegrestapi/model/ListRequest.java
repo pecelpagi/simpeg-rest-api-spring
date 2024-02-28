@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DepartmentRequest {
+public class ListRequest {
 
     @NotNull
     private Integer page;

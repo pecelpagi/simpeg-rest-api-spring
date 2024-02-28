@@ -1,6 +1,6 @@
 package com.galuhrmdh.simpegrestapi.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class WebResponse<T> {
+public class UpdateDepartmentRequest {
 
-    private T data;
+    private Integer id;
 
-    private String errors;
+    @NotBlank
+    private String code;
 
+    @NotBlank
+    private String name;
 
-    private PagingResponse paging;
 }
