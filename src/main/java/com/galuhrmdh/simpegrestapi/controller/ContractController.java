@@ -1,22 +1,47 @@
 package com.galuhrmdh.simpegrestapi.controller;
 
 import com.galuhrmdh.simpegrestapi.entity.User;
-import com.galuhrmdh.simpegrestapi.model.CreateDepartmentRequest;
-import com.galuhrmdh.simpegrestapi.model.SavedResponse;
-import com.galuhrmdh.simpegrestapi.model.UpdateDepartmentRequest;
-import com.galuhrmdh.simpegrestapi.model.WebResponse;
+import com.galuhrmdh.simpegrestapi.model.*;
+import com.galuhrmdh.simpegrestapi.model.contract.ContractResponse;
 import com.galuhrmdh.simpegrestapi.model.contract.CreateContractRequest;
 import com.galuhrmdh.simpegrestapi.model.contract.UpdateContractRequest;
 import com.galuhrmdh.simpegrestapi.service.ContractService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ContractController {
 
     @Autowired
     private ContractService contractService;
+
+    @GetMapping(
+            path = "/api/contracts",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<ContractResponse>> list(User user,
+                                                    @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+                                                    @RequestParam(value = "size", required = false, defaultValue = "5") Integer size
+    ) {
+        ListRequest request = ListRequest.builder()
+                .page(page)
+                .size(size)
+                .build();
+
+        Page<ContractResponse> contractResponses = contractService.list(request);
+        return WebResponse.<List<ContractResponse>>builder()
+                .data(contractResponses.getContent())
+                .paging(PagingResponse.builder()
+                        .currentPage(contractResponses.getNumber())
+                        .totalPage(contractResponses.getTotalPages())
+                        .size(contractResponses.getSize())
+                        .build())
+                .build();
+    }
 
     @PostMapping(
             path = "/api/contracts",

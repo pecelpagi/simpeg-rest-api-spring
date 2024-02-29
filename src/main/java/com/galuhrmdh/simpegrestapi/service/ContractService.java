@@ -1,19 +1,25 @@
 package com.galuhrmdh.simpegrestapi.service;
 
 import com.galuhrmdh.simpegrestapi.entity.Contract;
-import com.galuhrmdh.simpegrestapi.entity.Department;
 import com.galuhrmdh.simpegrestapi.entity.Employee;
+import com.galuhrmdh.simpegrestapi.model.ListRequest;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
-import com.galuhrmdh.simpegrestapi.model.UpdateDepartmentRequest;
+import com.galuhrmdh.simpegrestapi.model.contract.ContractResponse;
 import com.galuhrmdh.simpegrestapi.model.contract.CreateContractRequest;
 import com.galuhrmdh.simpegrestapi.model.contract.UpdateContractRequest;
 import com.galuhrmdh.simpegrestapi.repository.ContractRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
 public class ContractService {
@@ -26,6 +32,26 @@ public class ContractService {
 
     @Autowired
     private ValidationService validationService;
+
+    private ContractResponse toContractResponse(Contract contract) {
+        return ContractResponse.builder()
+                .id(contract.getId())
+                .employee(contract.getEmployee())
+                .contractStatus(contract.getContractStatus())
+                .startDate(contract.getStartDate())
+                .contractLengthMonth(contract.getContractLengthMonth())
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ContractResponse> list(ListRequest request) {
+        Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
+        Page<Contract> contracts = contractRepository.findAll(pageable);
+
+        List<ContractResponse> contractResponses = contracts.stream().map(this::toContractResponse).toList();
+
+        return new PageImpl<>(contractResponses, pageable, contracts.getTotalElements());
+    }
 
     @Transactional
     public SavedResponse create(CreateContractRequest request) {
