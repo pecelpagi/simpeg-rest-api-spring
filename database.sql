@@ -123,9 +123,9 @@ CREATE TABLE spouses
     spouse_sequence         TINYINT(2) NOT NULL,
     last_education          CHAR(3) NOT NULL,
     occupation              VARCHAR(30) NOT NULL,
-    employee_id             CHAR(16) NOT NULL,
+    employee_id             INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (employee_id) REFERENCES employees (id_number),
+    FOREIGN KEY (employee_id) REFERENCES employees (id),
     UNIQUE (id_number)
 );
 
@@ -150,9 +150,9 @@ CREATE TABLE children
 --        AC: Adopted Child
 --    }
     child_status            ENUM('BC', 'SC', 'AC') NOT NULL,
-    employee_id             CHAR(16) NOT NULL,
+    employee_id             INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (employee_id) REFERENCES employees (id_number),
+    FOREIGN KEY (employee_id) REFERENCES employees (id),
     UNIQUE (id_number)
 );
 
@@ -175,9 +175,9 @@ CREATE TABLE parents
 --        BM: Biological Mother
 --    }
     parent_status               ENUM('BF', 'BM') NOT NULL,
-    employee_id                 CHAR(16) NOT NULL,
+    employee_id                 INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (employee_id)   REFERENCES employees (id_number),
+    FOREIGN KEY (employee_id) REFERENCES employees (id),
     UNIQUE (id_number)
 );
 
@@ -190,9 +190,9 @@ CREATE TABLE educations
     location                    VARCHAR(100) NOT NULL,
     graduation_year             TINYINT(4) NOT NULL,
     certificate_number          VARCHAR(25) NOT NULL,
-    employee_id                 CHAR(16) NOT NULL,
+    employee_id                 INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (employee_id)   REFERENCES employees (id_number)
+    FOREIGN KEY (employee_id) REFERENCES employees (id)
 );
 
 CREATE TABLE work_experiences
@@ -205,9 +205,9 @@ CREATE TABLE work_experiences
     employee_position_id        INT NOT NULL,
     initial_period              DATE NOT NULL,
     final_period                DATE NOT NULL,
-    employee_id                 CHAR(16) NOT NULL,
+    employee_id                 INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (employee_id)   REFERENCES employees (id_number),
+    FOREIGN KEY (employee_id) REFERENCES employees (id),
     FOREIGN KEY (employee_position_id) REFERENCES employee_positions (id)
 );
 
@@ -226,7 +226,7 @@ CREATE TABLE warning_letters
     violation_1                         VARCHAR(100),
     violation_2                         VARCHAR(100),
     suspension_period                   DATE,
-    employee_id                         CHAR(16) NOT NULL,
+    employee_id                         INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (employee_id)           REFERENCES employees (id_number)
+    FOREIGN KEY (employee_id) REFERENCES employees (id)
 );
