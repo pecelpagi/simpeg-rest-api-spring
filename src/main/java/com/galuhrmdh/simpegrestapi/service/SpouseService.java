@@ -41,6 +41,14 @@ public class SpouseService {
         return SpouseResponse.builder()
                 .id(spouse.getId())
                 .employee(spouse.getEmployee())
+                .idNumber(spouse.getIdNumber())
+                .name(spouse.getName())
+                .birthplace(spouse.getBirthplace())
+                .birthdate(spouse.getBirthdate())
+                .dateOfMarriage(spouse.getDateOfMarriage())
+                .spouseSequence(spouse.getSpouseSequence())
+                .lastEducation(spouse.getLastEducation())
+                .occupation(spouse.getOccupation())
                 .build();
     }
 
@@ -51,7 +59,7 @@ public class SpouseService {
 
             if (Objects.nonNull(request.getSearch())) {
                 predicates.add(builder.or(
-                        builder.like(root.get("id_number"), "%" + request.getSearch() + "%"),
+                        builder.like(root.get("idNumber"), "%" + request.getSearch() + "%"),
                         builder.like(root.get("name"), "%" + request.getSearch() + "%"),
                         builder.like(root.get("birthplace"), "%" + request.getSearch() + "%"),
                         builder.like(root.get("occupation"), "%" + request.getSearch() + "%")
