@@ -188,7 +188,7 @@ CREATE TABLE educations
     major                       VARCHAR(30) NOT NULL,
     name                        VARCHAR(100) NOT NULL,
     location                    VARCHAR(100) NOT NULL,
-    graduation_year             TINYINT(4) NOT NULL,
+    graduation_year             SMALLINT(4) NOT NULL,
     certificate_number          VARCHAR(25) NOT NULL,
     employee_id                 INT NOT NULL,
     PRIMARY KEY (id),
