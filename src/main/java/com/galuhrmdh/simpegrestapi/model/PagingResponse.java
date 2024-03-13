@@ -17,4 +17,6 @@ public class PagingResponse {
 
     private Integer size;
 
+    private Long totalElements;
+
 }

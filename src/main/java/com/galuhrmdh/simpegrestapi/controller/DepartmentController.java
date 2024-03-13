@@ -38,6 +38,7 @@ public class DepartmentController {
                         .currentPage(departmentResponses.getNumber())
                         .totalPage(departmentResponses.getTotalPages())
                         .size(departmentResponses.getSize())
+                        .totalElements(departmentResponses.getTotalElements())
                         .build())
                 .build();
     }

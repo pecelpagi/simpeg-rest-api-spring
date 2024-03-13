@@ -30,6 +30,7 @@ public class DepartmentService {
 
     private DepartmentResponse toDepartmentResponse(Department department) {
         return DepartmentResponse.builder()
+                .id(department.getId())
                 .code(department.getCode())
                 .name(department.getName())
                 .build();

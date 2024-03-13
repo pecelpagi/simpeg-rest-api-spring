@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DepartmentResponse {
 
+    private Integer id;
+
     private String code;
 
     private String name;
