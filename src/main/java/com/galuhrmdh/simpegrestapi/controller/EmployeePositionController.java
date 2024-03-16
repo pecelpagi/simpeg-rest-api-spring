@@ -40,6 +40,7 @@ public class EmployeePositionController {
                 .paging(PagingResponse.builder()
                         .currentPage(employeePositionResponses.getNumber())
                         .totalPage(employeePositionResponses.getTotalPages())
+                        .totalElements(employeePositionResponses.getTotalElements())
                         .size(employeePositionResponses.getSize())
                         .build())
                 .build();

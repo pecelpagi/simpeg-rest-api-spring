@@ -37,13 +37,14 @@ public class SpouseController {
                 .size(size)
                 .build();
 
-        Page<SpouseResponse> employeePositionResponses = spouseService.list(request);
+        Page<SpouseResponse> spouseResponses = spouseService.list(request);
         return WebResponse.<List<SpouseResponse>>builder()
-                .data(employeePositionResponses.getContent())
+                .data(spouseResponses.getContent())
                 .paging(PagingResponse.builder()
-                        .currentPage(employeePositionResponses.getNumber())
-                        .totalPage(employeePositionResponses.getTotalPages())
-                        .size(employeePositionResponses.getSize())
+                        .currentPage(spouseResponses.getNumber())
+                        .totalPage(spouseResponses.getTotalPages())
+                        .size(spouseResponses.getSize())
+                        .totalElements(spouseResponses.getTotalElements())
                         .build())
                 .build();
     }

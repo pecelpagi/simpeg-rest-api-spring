@@ -1,5 +1,6 @@
 package com.galuhrmdh.simpegrestapi.service;
 
+import com.galuhrmdh.simpegrestapi.entity.Department;
 import com.galuhrmdh.simpegrestapi.entity.Employee;
 import com.galuhrmdh.simpegrestapi.entity.EmployeePosition;
 import com.galuhrmdh.simpegrestapi.model.ListRequest;
@@ -7,6 +8,7 @@ import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.CreateEmployeeRequest;
 import com.galuhrmdh.simpegrestapi.model.employee.EmployeeResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.UpdateEmployeeRequest;
+import com.galuhrmdh.simpegrestapi.repository.DepartmentRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeePositionRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
 import jakarta.persistence.criteria.Predicate;
@@ -34,6 +36,9 @@ public class EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
     private EmployeePositionRepository employeePositionRepository;
 
     @Autowired
@@ -46,7 +51,7 @@ public class EmployeeService {
                 .idNumber(employee.getIdNumber())
                 .name(employee.getName())
                 .gender(employee.getGender())
-                .departmentCode(employee.getDepartmentCode())
+                .department(employee.getDepartment())
                 .entryDate(employee.getEntryDate())
                 .address(employee.getAddress())
                 .city(employee.getCity())
@@ -100,11 +105,14 @@ public class EmployeeService {
         EmployeePosition employeePosition = employeePositionRepository.findById(request.getEmployeePositionId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee Position ID is not found"));
 
+        Department department = departmentRepository.findById(request.getDepartmentId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Department ID is not found"));
+
         Employee employee = new Employee();
         employee.setIdNumber(request.getIdNumber());
         employee.setName(request.getName());
         employee.setGender(request.getGender());
-        employee.setDepartmentCode(request.getDepartmentCode());
+        employee.setDepartment(department);
         employee.setEntryDate(request.getEntryDate());
         employee.setAddress(request.getAddress());
         employee.setCity(request.getCity());
@@ -138,11 +146,14 @@ public class EmployeeService {
         EmployeePosition employeePosition = employeePositionRepository.findById(request.getEmployeePositionId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee Position ID is not found"));
 
+        Department department = departmentRepository.findById(request.getDepartmentId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Department ID is not found"));
+
         Employee employee = employeeRepository.findById(request.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         employee.setIdNumber(request.getIdNumber());
         employee.setName(request.getName());
         employee.setGender(request.getGender());
-        employee.setDepartmentCode(request.getDepartmentCode());
+        employee.setDepartment(department);
         employee.setEntryDate(request.getEntryDate());
         employee.setAddress(request.getAddress());
         employee.setCity(request.getCity());

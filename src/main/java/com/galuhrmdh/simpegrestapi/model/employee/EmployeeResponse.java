@@ -1,5 +1,6 @@
 package com.galuhrmdh.simpegrestapi.model.employee;
 
+import com.galuhrmdh.simpegrestapi.entity.Department;
 import com.galuhrmdh.simpegrestapi.entity.EmployeePosition;
 import com.galuhrmdh.simpegrestapi.enums.*;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class EmployeeResponse {
 
     private Gender gender;
 
-    private String departmentCode;
+    private Department department;
 
     private Date entryDate;
 

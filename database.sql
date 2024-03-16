@@ -1,6 +1,6 @@
-CREATE DATABASE db_simpeg_development;
-
-USE db_simpeg_development;
+--CREATE DATABASE db_simpeg_development;
+--
+--USE db_simpeg_development;
 
 CREATE TABLE users
 (
@@ -59,7 +59,7 @@ CREATE table employees
 --        F: Female
 --    }
     gender                  ENUM('M', 'F') NOT NULL,
-    department_code         CHAR(4) NOT NULL,
+    department_id           INT NOT NULL,
     entry_date              DATE NOT NULL,
     address                 VARCHAR(255) NOT NULL,
     city                    VARCHAR(100) NOT NULL,
@@ -87,13 +87,14 @@ CREATE table employees
     --    }
     marital_status          ENUM('S', 'M') NOT NULL,
     income_tax_status       ENUM('TK', 'K_0', 'K_1', 'K_2', 'K_3') NOT NULL,
-    blood_type              ENUM('A', 'AB', 'B', 'O') NOT NULL,
+    blood_type              ENUM('A', 'AB', 'B', 'O'),
     bpjs_health             CHAR(16),
     bpjs_employment         CHAR(16),
     bpjs_retirement         CHAR(16),
     profile_picture         VARCHAR(100),
     PRIMARY KEY (id),
     FOREIGN KEY (employee_position_id) REFERENCES employee_positions (id),
+    FOREIGN KEY (department_id) REFERENCES departments (id),
     UNIQUE (id_number)
 );
 

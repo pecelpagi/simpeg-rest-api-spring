@@ -44,6 +44,7 @@ public class WorkExperienceController {
                         .currentPage(workExperienceResponses.getNumber())
                         .totalPage(workExperienceResponses.getTotalPages())
                         .size(workExperienceResponses.getSize())
+                        .totalElements(workExperienceResponses.getTotalElements())
                         .build())
                 .build();
     }

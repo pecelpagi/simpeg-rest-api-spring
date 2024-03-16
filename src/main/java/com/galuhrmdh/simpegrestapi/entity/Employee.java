@@ -29,8 +29,9 @@ public class Employee {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(name = "department_code")
-    private String departmentCode;
+    @ManyToOne
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "entry_date")

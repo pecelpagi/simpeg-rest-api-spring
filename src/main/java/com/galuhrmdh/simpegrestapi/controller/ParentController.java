@@ -44,6 +44,7 @@ public class ParentController {
                         .currentPage(parentResponses.getNumber())
                         .totalPage(parentResponses.getTotalPages())
                         .size(parentResponses.getSize())
+                        .totalElements(parentResponses.getTotalElements())
                         .build())
                 .build();
     }

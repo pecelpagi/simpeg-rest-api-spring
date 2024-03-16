@@ -46,6 +46,7 @@ public class WorkExperienceService {
         return WorkExperienceResponse.builder()
                 .id(workExperience.getId())
                 .employee(workExperience.getEmployee())
+                .companyName(workExperience.getCompanyName())
                 .employeePosition(workExperience.getEmployeePosition())
                 .type(workExperience.getType())
                 .location(workExperience.getLocation())

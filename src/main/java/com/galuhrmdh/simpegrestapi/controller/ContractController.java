@@ -39,6 +39,7 @@ public class ContractController {
                         .currentPage(contractResponses.getNumber())
                         .totalPage(contractResponses.getTotalPages())
                         .size(contractResponses.getSize())
+                        .totalElements(contractResponses.getTotalElements())
                         .build())
                 .build();
     }

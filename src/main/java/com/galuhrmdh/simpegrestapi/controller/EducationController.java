@@ -37,13 +37,14 @@ public class EducationController {
                 .size(size)
                 .build();
 
-        Page<EducationResponse> employeePositionResponses = educationService.list(request);
+        Page<EducationResponse> educationResponses = educationService.list(request);
         return WebResponse.<List<EducationResponse>>builder()
-                .data(employeePositionResponses.getContent())
+                .data(educationResponses.getContent())
                 .paging(PagingResponse.builder()
-                        .currentPage(employeePositionResponses.getNumber())
-                        .totalPage(employeePositionResponses.getTotalPages())
-                        .size(employeePositionResponses.getSize())
+                        .currentPage(educationResponses.getNumber())
+                        .totalPage(educationResponses.getTotalPages())
+                        .size(educationResponses.getSize())
+                        .totalElements(educationResponses.getTotalElements())
                         .build())
                 .build();
     }

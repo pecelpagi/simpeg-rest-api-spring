@@ -29,6 +29,7 @@ public class Contract {
     @Column(name = "contract_status")
     private ContractStatus contractStatus;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "start_date")
     private Date startDate;
 

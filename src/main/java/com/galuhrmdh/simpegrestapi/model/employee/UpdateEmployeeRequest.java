@@ -28,9 +28,7 @@ public class UpdateEmployeeRequest {
 
     private Gender gender;
 
-    @NotBlank
-    @Size(max = 4)
-    private String departmentCode;
+    private Integer departmentId;
 
     private Date entryDate;
 
