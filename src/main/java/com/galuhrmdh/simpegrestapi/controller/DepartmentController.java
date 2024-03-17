@@ -3,10 +3,15 @@ package com.galuhrmdh.simpegrestapi.controller;
 import com.galuhrmdh.simpegrestapi.entity.User;
 import com.galuhrmdh.simpegrestapi.model.*;
 import com.galuhrmdh.simpegrestapi.service.DepartmentService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -15,6 +20,16 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @GetMapping("/api/department-csv")
+    public WebResponse<String> generateCsvFile(HttpServletRequest request) {
+        String baseUrl = request.getScheme() + "://"
+                + request.getServerName()
+                + ":" + request.getServerPort()
+                + request.getContextPath();
+
+        return WebResponse.<String>builder().data(baseUrl + "/export/testt.csv").build();
+    }
 
     @GetMapping(
             path = "/api/departments",

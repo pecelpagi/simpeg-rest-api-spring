@@ -3,6 +3,7 @@ package com.galuhrmdh.simpegrestapi.service;
 import com.galuhrmdh.simpegrestapi.entity.Department;
 import com.galuhrmdh.simpegrestapi.model.*;
 import com.galuhrmdh.simpegrestapi.repository.DepartmentRepository;
+import com.galuhrmdh.simpegrestapi.util.CsvGeneratorUtil;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,9 @@ public class DepartmentService {
 
     @Autowired
     private ValidationService validationService;
+
+    @Autowired
+    private CsvGeneratorUtil csvGeneratorUtil;
 
     private DepartmentResponse toDepartmentResponse(Department department) {
         return DepartmentResponse.builder()
@@ -95,6 +99,11 @@ public class DepartmentService {
     public void delete(Integer id) {
         Department department = departmentRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         departmentRepository.delete(department);
+    }
+
+    public String buildCsv() {
+        List<Department> departments = departmentRepository.findAll();
+        return csvGeneratorUtil.generateCsv(departments);
     }
 
 }
