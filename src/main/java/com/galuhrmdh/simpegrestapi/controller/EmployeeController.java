@@ -8,8 +8,6 @@ import com.galuhrmdh.simpegrestapi.model.WebResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.CreateEmployeeRequest;
 import com.galuhrmdh.simpegrestapi.model.employee.EmployeeResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.UpdateEmployeeRequest;
-import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionResponse;
-import com.galuhrmdh.simpegrestapi.model.employeeposition.UpdateEmployeePositionRequest;
 import com.galuhrmdh.simpegrestapi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +21,6 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
-
 
     @GetMapping(
             path = "/api/employees",

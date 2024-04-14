@@ -231,3 +231,17 @@ CREATE TABLE warning_letters
     PRIMARY KEY (id),
     FOREIGN KEY (employee_id) REFERENCES employees (id)
 );
+
+CREATE TABLE notifications
+(
+    id INT NOT NULL AUTO_INCREMENT,
+    --    notification_type: {
+    --        EE: Export Employee
+    --        EWR: Export Warning Report
+    --    }
+    notification_type ENUM('EE', 'EWR') NOT NULL,
+    attachment  VARCHAR(50),
+    read_status BOOLEAN NOT NULL,
+    created_at  DATETIME NOT NULL,
+    PRIMARY KEY (id)
+);

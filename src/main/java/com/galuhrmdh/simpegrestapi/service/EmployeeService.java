@@ -1,5 +1,10 @@
 package com.galuhrmdh.simpegrestapi.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.galuhrmdh.simpegrestapi.model.JobMessage;
+import com.galuhrmdh.simpegrestapi.RabbitMQUtil;
 import com.galuhrmdh.simpegrestapi.entity.Department;
 import com.galuhrmdh.simpegrestapi.entity.Employee;
 import com.galuhrmdh.simpegrestapi.entity.EmployeePosition;
@@ -13,6 +18,7 @@ import com.galuhrmdh.simpegrestapi.repository.EmployeePositionRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -43,7 +49,6 @@ public class EmployeeService {
 
     @Autowired
     private ValidationService validationService;
-
 
     private EmployeeResponse toEmployeeResponse(Employee employee) {
         return EmployeeResponse.builder()
