@@ -20,6 +20,8 @@ public class UpdateWarningLetterRequest {
 
     private Date dateFacingHrd;
 
+    private Date violationDate;
+
     private Regarding regarding;
 
     private String violation1;

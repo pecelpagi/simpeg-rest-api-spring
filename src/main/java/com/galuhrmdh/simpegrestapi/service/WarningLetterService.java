@@ -42,6 +42,7 @@ public class WarningLetterService {
                 .id(warningLetter.getId())
                 .employee(warningLetter.getEmployee())
                 .dateFacingHrd(warningLetter.getDateFacingHrd())
+                .violationDate(warningLetter.getViolationDate())
                 .regarding(warningLetter.getRegarding())
                 .violation1(warningLetter.getViolation1())
                 .violation2(warningLetter.getViolation2())
@@ -82,6 +83,7 @@ public class WarningLetterService {
         WarningLetter warningLetter = new WarningLetter();
         warningLetter.setEmployee(employee);
         warningLetter.setDateFacingHrd(request.getDateFacingHrd());
+        warningLetter.setViolationDate(request.getViolationDate());
         warningLetter.setRegarding(request.getRegarding());
         warningLetter.setViolation1(request.getViolation1());
         warningLetter.setViolation2(request.getViolation2());
@@ -105,6 +107,7 @@ public class WarningLetterService {
         WarningLetter warningLetter = warningLetterRepository.findById(request.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         warningLetter.setEmployee(employee);
         warningLetter.setDateFacingHrd(request.getDateFacingHrd());
+        warningLetter.setViolationDate(request.getViolationDate());
         warningLetter.setRegarding(request.getRegarding());
         warningLetter.setViolation1(request.getViolation1());
         warningLetter.setViolation2(request.getViolation2());

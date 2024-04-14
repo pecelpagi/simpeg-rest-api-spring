@@ -224,6 +224,7 @@ CREATE TABLE warning_letters
 --        S: Suspension
 --    }
     regarding                           ENUM('R', 'W1', 'W2', 'W3', 'S') NOT NULL,
+    violation_date                      DATE NOT NULL,
     violation_1                         VARCHAR(100),
     violation_2                         VARCHAR(100),
     suspension_period                   DATE,

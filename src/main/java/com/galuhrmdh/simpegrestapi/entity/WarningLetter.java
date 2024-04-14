@@ -26,6 +26,10 @@ public class WarningLetter {
     @Column(name = "date_facing_hrd")
     private Date dateFacingHrd;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "violation_date")
+    private Date violationDate;
+
     @Enumerated(EnumType.STRING)
     private Regarding regarding;
 
