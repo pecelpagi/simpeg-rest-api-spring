@@ -5,10 +5,7 @@ import com.galuhrmdh.simpegrestapi.model.ListRequest;
 import com.galuhrmdh.simpegrestapi.model.PagingResponse;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.WebResponse;
-import com.galuhrmdh.simpegrestapi.model.employee.CreateEmployeeRequest;
-import com.galuhrmdh.simpegrestapi.model.employee.EmployeeCitizenRecap;
-import com.galuhrmdh.simpegrestapi.model.employee.EmployeeResponse;
-import com.galuhrmdh.simpegrestapi.model.employee.UpdateEmployeeRequest;
+import com.galuhrmdh.simpegrestapi.model.employee.*;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +87,17 @@ public class EmployeeController {
         List<EmployeeCitizenRecap> employeeCitizenRecap = employeeService.getEmployeeCitizenRecap();
         return WebResponse.<List<EmployeeCitizenRecap>>builder()
                 .data(employeeCitizenRecap)
+                .build();
+    }
+
+    @GetMapping(
+            path = "/api/employee_religion_recap",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<EmployeeReligionRecap>> employeeReligionRecap(User user) {
+        List<EmployeeReligionRecap> employeeReligionRecap = employeeService.getEmployeeReligionRecap();
+        return WebResponse.<List<EmployeeReligionRecap>>builder()
+                .data(employeeReligionRecap)
                 .build();
     }
 }

@@ -3,6 +3,7 @@ package com.galuhrmdh.simpegrestapi.repository;
 import com.galuhrmdh.simpegrestapi.entity.Employee;
 import com.galuhrmdh.simpegrestapi.entity.EmployeePosition;
 import com.galuhrmdh.simpegrestapi.model.employee.EmployeeCitizenRecap;
+import com.galuhrmdh.simpegrestapi.model.employee.EmployeeReligionRecap;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -24,5 +25,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
             "(COUNT(e.citizen) AS total, e.citizen) FROM Employee e " +
             "GROUP BY e.citizen")
     List<EmployeeCitizenRecap> getEmployeeCitizenRecap();
+
+    @Query(value = "select " +
+            "new com.galuhrmdh.simpegrestapi.model.employee.EmployeeReligionRecap" +
+            "(COUNT(e.religion) AS total, e.religion) FROM Employee e " +
+            "GROUP BY e.religion")
+    List<EmployeeReligionRecap> getEmployeeReligionRecap();
 
 }

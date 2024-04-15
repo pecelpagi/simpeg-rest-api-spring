@@ -10,10 +10,7 @@ import com.galuhrmdh.simpegrestapi.entity.Employee;
 import com.galuhrmdh.simpegrestapi.entity.EmployeePosition;
 import com.galuhrmdh.simpegrestapi.model.ListRequest;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
-import com.galuhrmdh.simpegrestapi.model.employee.CreateEmployeeRequest;
-import com.galuhrmdh.simpegrestapi.model.employee.EmployeeCitizenRecap;
-import com.galuhrmdh.simpegrestapi.model.employee.EmployeeResponse;
-import com.galuhrmdh.simpegrestapi.model.employee.UpdateEmployeeRequest;
+import com.galuhrmdh.simpegrestapi.model.employee.*;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.repository.DepartmentRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeePositionRepository;
@@ -196,4 +193,7 @@ public class EmployeeService {
         return employeeRepository.getEmployeeCitizenRecap();
     }
 
+    public List<EmployeeReligionRecap> getEmployeeReligionRecap() {
+        return employeeRepository.getEmployeeReligionRecap();
+    }
 }
