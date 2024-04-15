@@ -13,6 +13,7 @@ import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.CreateEmployeeRequest;
 import com.galuhrmdh.simpegrestapi.model.employee.EmployeeResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.UpdateEmployeeRequest;
+import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.repository.DepartmentRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeePositionRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
@@ -189,6 +190,5 @@ public class EmployeeService {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         employeeRepository.delete(employee);
     }
-
 
 }

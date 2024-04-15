@@ -3,6 +3,7 @@ package com.galuhrmdh.simpegrestapi.controller;
 import com.galuhrmdh.simpegrestapi.entity.User;
 import com.galuhrmdh.simpegrestapi.model.*;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.CreateEmployeePositionRequest;
+import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionResponse;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.UpdateEmployeePositionRequest;
 import com.galuhrmdh.simpegrestapi.service.EmployeePositionService;
@@ -79,4 +80,14 @@ public class EmployeePositionController {
         return WebResponse.<String>builder().data("OK").build();
     }
 
+    @GetMapping(
+            path = "/api/employee_positions_recap",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<EmployeePositionRecap>> list(User user) {
+        List<EmployeePositionRecap> employeePositionRecap = employeePositionService.getEmployeePositionRecap();
+        return WebResponse.<List<EmployeePositionRecap>>builder()
+                .data(employeePositionRecap)
+                .build();
+    }
 }
