@@ -6,8 +6,10 @@ import com.galuhrmdh.simpegrestapi.entity.Employee;
 import com.galuhrmdh.simpegrestapi.model.ListRequest;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.education.CreateEducationRequest;
+import com.galuhrmdh.simpegrestapi.model.education.EducationRecap;
 import com.galuhrmdh.simpegrestapi.model.education.EducationResponse;
 import com.galuhrmdh.simpegrestapi.model.education.UpdateEducationRequest;
+import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.repository.EducationRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
 import jakarta.persistence.criteria.Predicate;
@@ -129,6 +131,11 @@ public class EducationService {
     public void delete(Integer id) {
         Education education = educationRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         educationRepository.delete(education);
+    }
+
+    @Transactional
+    public List<EducationRecap> getEducationRecap() {
+        return educationRepository.getEducationRecap();
     }
 
 }

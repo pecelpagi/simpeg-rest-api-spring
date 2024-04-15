@@ -6,8 +6,10 @@ import com.galuhrmdh.simpegrestapi.model.PagingResponse;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.WebResponse;
 import com.galuhrmdh.simpegrestapi.model.education.CreateEducationRequest;
+import com.galuhrmdh.simpegrestapi.model.education.EducationRecap;
 import com.galuhrmdh.simpegrestapi.model.education.EducationResponse;
 import com.galuhrmdh.simpegrestapi.model.education.UpdateEducationRequest;
+import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.service.EducationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -81,5 +83,15 @@ public class EducationController {
 
         return WebResponse.<String>builder().data("OK").build();
     }
-    
+
+    @GetMapping(
+            path = "/api/educations_recap",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<EducationRecap>> list(User user) {
+        List<EducationRecap> educationRecap = educationService.getEducationRecap();
+        return WebResponse.<List<EducationRecap>>builder()
+                .data(educationRecap)
+                .build();
+    }
 }
