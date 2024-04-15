@@ -2,6 +2,8 @@ package com.galuhrmdh.simpegrestapi.controller;
 
 import com.galuhrmdh.simpegrestapi.entity.User;
 import com.galuhrmdh.simpegrestapi.model.*;
+import com.galuhrmdh.simpegrestapi.model.department.DepartmentRecap;
+import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -74,5 +76,16 @@ public class DepartmentController {
         departmentService.delete(departmentId);
 
         return WebResponse.<String>builder().data("OK").build();
+    }
+
+    @GetMapping(
+            path = "/api/departments_recap",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<DepartmentRecap>> departmentRecap(User user) {
+        List<DepartmentRecap> departmentRecap = departmentService.getDepartmentRecap();
+        return WebResponse.<List<DepartmentRecap>>builder()
+                .data(departmentRecap)
+                .build();
     }
 }

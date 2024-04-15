@@ -2,6 +2,8 @@ package com.galuhrmdh.simpegrestapi.service;
 
 import com.galuhrmdh.simpegrestapi.entity.Department;
 import com.galuhrmdh.simpegrestapi.model.*;
+import com.galuhrmdh.simpegrestapi.model.department.DepartmentRecap;
+import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.repository.DepartmentRepository;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,4 +99,7 @@ public class DepartmentService {
         departmentRepository.delete(department);
     }
 
+    public List<DepartmentRecap> getDepartmentRecap() {
+        return departmentRepository.getDepartmentRecap();
+    }
 }
