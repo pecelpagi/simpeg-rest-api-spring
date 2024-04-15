@@ -6,8 +6,10 @@ import com.galuhrmdh.simpegrestapi.model.PagingResponse;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.WebResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.CreateEmployeeRequest;
+import com.galuhrmdh.simpegrestapi.model.employee.EmployeeCitizenRecap;
 import com.galuhrmdh.simpegrestapi.model.employee.EmployeeResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.UpdateEmployeeRequest;
+import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -80,4 +82,14 @@ public class EmployeeController {
         return WebResponse.<String>builder().data("OK").build();
     }
 
+    @GetMapping(
+            path = "/api/employee_citizen_recap",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<EmployeeCitizenRecap>> employeeCitizenRecap(User user) {
+        List<EmployeeCitizenRecap> employeeCitizenRecap = employeeService.getEmployeeCitizenRecap();
+        return WebResponse.<List<EmployeeCitizenRecap>>builder()
+                .data(employeeCitizenRecap)
+                .build();
+    }
 }

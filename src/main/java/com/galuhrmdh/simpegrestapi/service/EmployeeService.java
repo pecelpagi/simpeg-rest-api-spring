@@ -11,6 +11,7 @@ import com.galuhrmdh.simpegrestapi.entity.EmployeePosition;
 import com.galuhrmdh.simpegrestapi.model.ListRequest;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.CreateEmployeeRequest;
+import com.galuhrmdh.simpegrestapi.model.employee.EmployeeCitizenRecap;
 import com.galuhrmdh.simpegrestapi.model.employee.EmployeeResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.UpdateEmployeeRequest;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
@@ -189,6 +190,10 @@ public class EmployeeService {
     public void delete(Integer id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         employeeRepository.delete(employee);
+    }
+
+    public List<EmployeeCitizenRecap> getEmployeeCitizenRecap() {
+        return employeeRepository.getEmployeeCitizenRecap();
     }
 
 }

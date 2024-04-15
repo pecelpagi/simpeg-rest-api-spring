@@ -84,7 +84,7 @@ public class EmployeePositionController {
             path = "/api/employee_positions_recap",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<List<EmployeePositionRecap>> list(User user) {
+    public WebResponse<List<EmployeePositionRecap>> employeePositionRecap(User user) {
         List<EmployeePositionRecap> employeePositionRecap = employeePositionService.getEmployeePositionRecap();
         return WebResponse.<List<EmployeePositionRecap>>builder()
                 .data(employeePositionRecap)
