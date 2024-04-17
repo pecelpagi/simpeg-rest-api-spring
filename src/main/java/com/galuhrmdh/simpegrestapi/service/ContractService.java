@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ContractService {
@@ -99,6 +100,10 @@ public class ContractService {
     public void delete(Integer id) {
         Contract contract = contractRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         contractRepository.delete(contract);
+    }
+
+    public List<Map<String, Object>> getContractsReminder() {
+        return contractRepository.getContractReminder();
     }
 
 }

@@ -23,7 +23,7 @@ public class CreateWorkExperienceRequest {
 
     private String department;
 
-    private Integer employeePositionId;
+    private String employeePosition;
 
     private Date initialPeriod;
 

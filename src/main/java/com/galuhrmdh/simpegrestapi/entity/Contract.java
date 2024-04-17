@@ -35,4 +35,6 @@ public class Contract {
 
     @Column(name = "contract_length_month")
     private Integer contractLengthMonth;
+
+    private String attachment;
 }

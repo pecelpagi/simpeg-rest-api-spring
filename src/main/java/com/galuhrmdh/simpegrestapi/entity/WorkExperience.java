@@ -29,9 +29,8 @@ public class WorkExperience {
 
     private String department;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_position_id", referencedColumnName = "id")
-    private EmployeePosition employeePosition;
+    @Column(name = "employee_position")
+    private String employeePosition;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "initial_period")

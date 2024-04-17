@@ -88,12 +88,9 @@ public class WorkExperienceService {
         Employee employee = employeeRepository.findById(request.getEmployeeId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee ID is not found"));
 
-        EmployeePosition employeePosition = employeePositionRepository.findById(request.getEmployeePositionId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee Position ID is not found"));
-
         WorkExperience workExperience = new WorkExperience();
         workExperience.setEmployee(employee);
-        workExperience.setEmployeePosition(employeePosition);
+        workExperience.setEmployeePosition(request.getEmployeePosition());
         workExperience.setCompanyName(request.getCompanyName());
         workExperience.setType(request.getType());
         workExperience.setLocation(request.getLocation());
@@ -116,12 +113,9 @@ public class WorkExperienceService {
         Employee employee = employeeRepository.findById(request.getEmployeeId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee ID is not found"));
 
-        EmployeePosition employeePosition = employeePositionRepository.findById(request.getEmployeePositionId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee Position ID is not found"));
-
         WorkExperience workExperience = workExperienceRepository.findById(request.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         workExperience.setEmployee(employee);
-        workExperience.setEmployeePosition(employeePosition);
+        workExperience.setEmployeePosition(request.getEmployeePosition());
         workExperience.setCompanyName(request.getCompanyName());
         workExperience.setType(request.getType());
         workExperience.setLocation(request.getLocation());

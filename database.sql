@@ -88,6 +88,7 @@ CREATE table employees
     marital_status          ENUM('S', 'M') NOT NULL,
     income_tax_status       ENUM('TK', 'K_0', 'K_1', 'K_2', 'K_3') NOT NULL,
     blood_type              ENUM('A', 'AB', 'B', 'O'),
+    phone                   CHAR(15) NOT NULL,
     bpjs_health             CHAR(16),
     bpjs_employment         CHAR(16),
     bpjs_retirement         CHAR(16),
@@ -109,6 +110,7 @@ CREATE TABLE contracts
     contract_status         ENUM('C', 'P') NOT NULL,
     start_date              DATE NOT NULL,
     contract_length_month   TINYINT(3) NOT NULL,
+    attachment              VARCHAR(100);
     PRIMARY KEY (id),
     FOREIGN KEY (employee_id) REFERENCES employees (id)
 );
@@ -122,7 +124,7 @@ CREATE TABLE spouses
     birthdate               DATE NOT NULL,
     date_of_marriage        DATE NOT NULL,
     spouse_sequence         TINYINT(2) NOT NULL,
-    last_education          CHAR(3) NOT NULL,
+    last_education          CHAR(4) NOT NULL,
     occupation              VARCHAR(30) NOT NULL,
     employee_id             INT NOT NULL,
     PRIMARY KEY (id),
@@ -143,7 +145,7 @@ CREATE TABLE children
 --    }
     gender                  ENUM('M', 'F') NOT NULL,
     child_sequence          TINYINT(2) NOT NULL,
-    last_education          CHAR(3) NOT NULL,
+    last_education          CHAR(4) NOT NULL,
     occupation              VARCHAR(30) NOT NULL,
 --    child_status: {
 --        BC: Biological Child
@@ -169,7 +171,7 @@ CREATE TABLE parents
 --        F: Female
 --    }
     gender                      ENUM('M', 'F') NOT NULL,
-    last_education              CHAR(3) NOT NULL,
+    last_education              CHAR(4) NOT NULL,
     occupation                  VARCHAR(30) NOT NULL,
 --    parent_status: {
 --        BF: Biological Father
@@ -191,6 +193,7 @@ CREATE TABLE educations
     location                    VARCHAR(100) NOT NULL,
     graduation_year             SMALLINT(4) NOT NULL,
     certificate_number          VARCHAR(25) NOT NULL,
+    attachment                  VARCHAR(100),
     employee_id                 INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (employee_id) REFERENCES employees (id)
@@ -203,13 +206,12 @@ CREATE TABLE work_experiences
     type                        VARCHAR(30) NOT NULL,
     location                    VARCHAR(100) NOT NULL,
     department                  VARCHAR(50) NOT NULL,
-    employee_position_id        INT NOT NULL,
+    employee_position           VARCHAR(100) NOT NULL,
     initial_period              DATE NOT NULL,
     final_period                DATE NOT NULL,
     employee_id                 INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (employee_id) REFERENCES employees (id),
-    FOREIGN KEY (employee_position_id) REFERENCES employee_positions (id)
+    FOREIGN KEY (employee_id) REFERENCES employees (id)
 );
 
 CREATE TABLE warning_letters
@@ -228,6 +230,7 @@ CREATE TABLE warning_letters
     violation_1                         VARCHAR(100),
     violation_2                         VARCHAR(100),
     suspension_period                   DATE,
+    attachment                          VARCHAR(100);
     employee_id                         INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (employee_id) REFERENCES employees (id)

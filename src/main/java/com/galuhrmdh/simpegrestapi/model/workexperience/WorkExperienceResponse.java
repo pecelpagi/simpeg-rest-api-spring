@@ -29,7 +29,7 @@ public class WorkExperienceResponse {
 
     private String department;
 
-    private EmployeePosition employeePosition;
+    private String employeePosition;
 
     private Date initialPeriod;
 

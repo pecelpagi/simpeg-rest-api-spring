@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ContractController {
@@ -75,5 +76,15 @@ public class ContractController {
         contractService.delete(contractId);
 
         return WebResponse.<String>builder().data("OK").build();
+    }
+
+    @GetMapping(
+            path = "/api/contracts_reminder",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<List<Map<String, Object>>> contractsReminder(User user) {
+        List<Map<String, Object>> contractReminder = contractService.getContractsReminder();
+
+        return WebResponse.<List<Map<String, Object>>>builder().data(contractReminder).build();
     }
 }
