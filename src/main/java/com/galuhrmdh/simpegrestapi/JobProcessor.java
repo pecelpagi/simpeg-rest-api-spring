@@ -69,8 +69,6 @@ public class JobProcessor {
     }
 
     public void exportEmployee() {
-        CountDownLatch latch = new CountDownLatch(5);
-
         redisOperations.set(RedisKey.EXPORT_EMPLOYEE_PROGRESS.toString(), "1");
 
         rabbitTemplate.convertAndSend(RabbitMQUtil.topicExchangeName, String.format("simpeg.rkey.%s", RabbitMQUtil.notificationQueue), RabbitMQUtil.notificationQueue);
@@ -92,28 +90,25 @@ public class JobProcessor {
     }
 
     public void exportWarningReport() {
-        CountDownLatch latch = new CountDownLatch(5);
+        redisOperations.set(RedisKey.EXPORT_WARNING_REPORT_PROGRESS.toString(), "1");
 
-        for (var i = 0; i < 5; i++) {
-            redisOperations.set(RedisKey.EXPORT_WARNING_REPORT_PROGRESS.toString(), Integer.toString(20 * i));
-            log.info("EXPORT REPORT SEDANG DI PROSES {}", i);
-            rabbitTemplate.convertAndSend(RabbitMQUtil.topicExchangeName, String.format("simpeg.rkey.%s", RabbitMQUtil.notificationQueue), RabbitMQUtil.notificationQueue);
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            latch.countDown();
-        }
+        rabbitTemplate.convertAndSend(RabbitMQUtil.topicExchangeName, String.format("simpeg.rkey.%s", RabbitMQUtil.notificationQueue), RabbitMQUtil.notificationQueue);
 
         try {
-            latch.await();
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
+        String fileName = exportService.exportWarningReport();
+
         redisTemplate.delete(RedisKey.EXPORT_WARNING_REPORT_PROGRESS.toString());
-        log.info("PROSES EXPORT REPORT TELAH SELESAI");
+        log.info("PROSES EXPORT WARNING REPORT TELAH SELESAI");
+
+        this.createNotification(NotificationType.EWR, fileName);
+
+        rabbitTemplate.convertAndSend(RabbitMQUtil.topicExchangeName, String.format("simpeg.rkey.%s", RabbitMQUtil.notificationQueue), RabbitMQUtil.notificationQueue);
+
     }
 
 }

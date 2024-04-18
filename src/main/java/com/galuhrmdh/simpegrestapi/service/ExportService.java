@@ -1,8 +1,10 @@
 package com.galuhrmdh.simpegrestapi.service;
 
 import com.galuhrmdh.simpegrestapi.entity.Employee;
+import com.galuhrmdh.simpegrestapi.entity.WarningLetter;
 import com.galuhrmdh.simpegrestapi.enums.RedisKey;
 import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
+import com.galuhrmdh.simpegrestapi.repository.WarningLetterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -23,6 +25,9 @@ public class ExportService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private WarningLetterRepository warningLetterRepository;
 
     private String toEmployeesAsCsv(List<Employee> employees) {
         StringBuilder csvData = new StringBuilder();
@@ -92,6 +97,48 @@ public class ExportService {
         return csvData.toString();
     }
 
+    private String toWarningReportAsCsv(List<WarningLetter> warningLetters) {
+        StringBuilder csvData = new StringBuilder();
+        String CSV_HEADER = "No. Urut," +
+                "NIK," +
+                "Nama," +
+                "Jabatan," +
+                "Tanggal Ke HRD," +
+                "Perihal," +
+                "Tanggal Pelanggaran," +
+                "Pelanggaran," +
+                "Pelanggaran Lainnya," +
+                "Tanggal Berakhir";
+
+        csvData.append("Daftar ST / SP /Skorsing");
+        csvData.append("\n");
+        csvData.append("\n");
+        csvData.append(CSV_HEADER);
+        csvData.append("\n");
+
+        StringBuilder CSV_BODY = new StringBuilder();
+
+        var sequenceNumber = 0;
+        for (WarningLetter warningLetter : warningLetters) {
+            sequenceNumber++;
+            CSV_BODY.append(sequenceNumber).append(",");
+            CSV_BODY.append(warningLetter.getEmployee().getIdNumber()).append(",");
+            CSV_BODY.append(warningLetter.getEmployee().getName()).append(",");
+            CSV_BODY.append(warningLetter.getEmployee().getEmployeePosition().getName()).append(",");
+            CSV_BODY.append(warningLetter.getDateFacingHrd()).append(",");
+            CSV_BODY.append(warningLetter.getRegarding()).append(",");
+            CSV_BODY.append(warningLetter.getViolationDate()).append(",");
+            CSV_BODY.append(warningLetter.getViolation1()).append(",");
+            CSV_BODY.append(warningLetter.getViolation2()).append(",");
+            CSV_BODY.append(warningLetter.getSuspensionPeriod()).append(",");
+            CSV_BODY.append("\n");
+        }
+
+        csvData.append(CSV_BODY);
+
+        return csvData.toString();
+    }
+
     private String createFileName() {
         LocalDateTime myDateObj = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy_MM_dd_HH_mm_ss");
@@ -120,10 +167,38 @@ public class ExportService {
         return "employee_".concat(fileName);
     }
 
+    @Transactional
+    public String exportWarningReport() {
+        List<WarningLetter> warningLetters =  warningLetterRepository.findAll();
+
+        String fileName = createFileName();
+
+        try {
+            String csvResult = toWarningReportAsCsv(warningLetters);
+
+            String CSV_FILENAME = "/opt/simpeg_files/export/warning_report_".concat(fileName);
+            FileWriter myWriter = new FileWriter(CSV_FILENAME);
+            myWriter.write(csvResult);
+            myWriter.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "warning_report_".concat(fileName);
+    }
+
     public String getExportEmployeeStatus() {
         ValueOperations<String, String> operations = redisTemplate.opsForValue();
 
         String value = operations.get(RedisKey.EXPORT_EMPLOYEE_PROGRESS.toString());
+
+        return value == null ? "NO_EXPORT" : "IS_EXPORTING";
+    }
+
+    public String getExportWarningReportStatus() {
+        ValueOperations<String, String> operations = redisTemplate.opsForValue();
+
+        String value = operations.get(RedisKey.EXPORT_WARNING_REPORT_PROGRESS.toString());
 
         return value == null ? "NO_EXPORT" : "IS_EXPORTING";
     }

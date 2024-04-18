@@ -12,7 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @RestController
@@ -83,7 +88,15 @@ public class ContractController {
             path = "/api/contracts_reminder",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<List<Map<String, Object>>> contractsReminder(User user, @RequestBody ContractReminderRequest request) {
+    public WebResponse<List<Map<String, Object>>> contractsReminder(User user,
+                                                                    @RequestParam(value = "startDate", required = true) String startDate,
+                                                                    @RequestParam(value = "endDate", required = true) String endDate
+                                                                    ) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+
+        ContractReminderRequest request = new ContractReminderRequest();
+        request.setStartDate(formatter.parse(startDate));
+        request.setEndDate(formatter.parse(endDate));
         List<Map<String, Object>> contractReminder = contractService.getContractsReminder(request);
 
         return WebResponse.<List<Map<String, Object>>>builder().data(contractReminder).build();

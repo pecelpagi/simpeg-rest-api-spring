@@ -43,6 +43,12 @@ public class ExportController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<String> exportWarningReport(User user) throws JsonProcessingException {
+        boolean isExporting = exportService.getExportWarningReportStatus().equals("IS_EXPORTING");
+
+        if (isExporting) {
+            return WebResponse.<String>builder().data("EXPORTING").build();
+        }
+
         rabbitPublisherService.exportWarningReport();
 
         return WebResponse.<String>builder().data("OK").build();
@@ -54,6 +60,14 @@ public class ExportController {
     )
     public WebResponse<String> exportEmployeeStatus(User user) throws JsonProcessingException {
         return WebResponse.<String>builder().data(exportService.getExportEmployeeStatus()).build();
+    }
+
+    @GetMapping(
+            path = "/api/export-warning-report-status",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<String> exportWarningReportStatus(User user) throws JsonProcessingException {
+        return WebResponse.<String>builder().data(exportService.getExportWarningReportStatus()).build();
     }
 
 }
