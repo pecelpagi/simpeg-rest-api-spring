@@ -2,6 +2,7 @@ package com.galuhrmdh.simpegrestapi.controller;
 
 import com.galuhrmdh.simpegrestapi.entity.User;
 import com.galuhrmdh.simpegrestapi.model.*;
+import com.galuhrmdh.simpegrestapi.model.contract.ContractReminderRequest;
 import com.galuhrmdh.simpegrestapi.model.contract.ContractResponse;
 import com.galuhrmdh.simpegrestapi.model.contract.CreateContractRequest;
 import com.galuhrmdh.simpegrestapi.model.contract.UpdateContractRequest;
@@ -82,8 +83,8 @@ public class ContractController {
             path = "/api/contracts_reminder",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public WebResponse<List<Map<String, Object>>> contractsReminder(User user) {
-        List<Map<String, Object>> contractReminder = contractService.getContractsReminder();
+    public WebResponse<List<Map<String, Object>>> contractsReminder(User user, @RequestBody ContractReminderRequest request) {
+        List<Map<String, Object>> contractReminder = contractService.getContractsReminder(request);
 
         return WebResponse.<List<Map<String, Object>>>builder().data(contractReminder).build();
     }

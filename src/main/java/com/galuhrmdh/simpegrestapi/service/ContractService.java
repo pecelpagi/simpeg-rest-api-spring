@@ -4,6 +4,7 @@ import com.galuhrmdh.simpegrestapi.entity.Contract;
 import com.galuhrmdh.simpegrestapi.entity.Employee;
 import com.galuhrmdh.simpegrestapi.model.ListRequest;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
+import com.galuhrmdh.simpegrestapi.model.contract.ContractReminderRequest;
 import com.galuhrmdh.simpegrestapi.model.contract.ContractResponse;
 import com.galuhrmdh.simpegrestapi.model.contract.CreateContractRequest;
 import com.galuhrmdh.simpegrestapi.model.contract.UpdateContractRequest;
@@ -102,8 +103,8 @@ public class ContractService {
         contractRepository.delete(contract);
     }
 
-    public List<Map<String, Object>> getContractsReminder() {
-        return contractRepository.getContractReminder();
+    public List<Map<String, Object>> getContractsReminder(ContractReminderRequest request) {
+        return contractRepository.getContractReminder(request.getStartDate(), request.getEndDate());
     }
 
 }
