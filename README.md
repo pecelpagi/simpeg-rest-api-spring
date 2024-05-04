@@ -1,2 +1,3 @@
 # REST API using Spring Framework
-work in progress
+
+Client: https://github.com/pecelpagi/simpeg-client
