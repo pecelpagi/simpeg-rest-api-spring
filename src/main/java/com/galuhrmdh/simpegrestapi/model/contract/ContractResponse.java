@@ -25,4 +25,5 @@ public class ContractResponse {
 
     private Integer contractLengthMonth;
 
+    private String attachment;
 }

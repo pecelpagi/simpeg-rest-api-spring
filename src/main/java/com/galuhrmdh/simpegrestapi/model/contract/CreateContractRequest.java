@@ -23,4 +23,6 @@ public class CreateContractRequest {
     private Date startDate;
 
     private Integer contractLengthMonth;
+
+    private String attachment;
 }

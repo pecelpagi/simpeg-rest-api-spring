@@ -42,6 +42,7 @@ public class ContractService {
                 .contractStatus(contract.getContractStatus())
                 .startDate(contract.getStartDate())
                 .contractLengthMonth(contract.getContractLengthMonth())
+                .attachment(contract.getAttachment())
                 .build();
     }
 
@@ -67,6 +68,7 @@ public class ContractService {
         contract.setContractStatus(request.getContractStatus());
         contract.setStartDate(request.getStartDate());
         contract.setContractLengthMonth(request.getContractLengthMonth());
+        contract.setAttachment(request.getAttachment());
 
         Contract savedContract = contractRepository.save(contract);
 
@@ -88,6 +90,7 @@ public class ContractService {
         contract.setContractStatus(request.getContractStatus());
         contract.setStartDate(request.getStartDate());
         contract.setContractLengthMonth(request.getContractLengthMonth());
+        contract.setAttachment(request.getAttachment());
 
         Contract savedContract = contractRepository.save(contract);
 
