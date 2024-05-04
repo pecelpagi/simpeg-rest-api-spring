@@ -47,6 +47,7 @@ public class WarningLetterService {
                 .violation1(warningLetter.getViolation1())
                 .violation2(warningLetter.getViolation2())
                 .suspensionPeriod(warningLetter.getSuspensionPeriod())
+                .attachment(warningLetter.getAttachment())
                 .build();
     }
 
@@ -88,6 +89,7 @@ public class WarningLetterService {
         warningLetter.setViolation1(request.getViolation1());
         warningLetter.setViolation2(request.getViolation2());
         warningLetter.setSuspensionPeriod(request.getSuspensionPeriod());
+        warningLetter.setAttachment(request.getAttachment());
 
         WarningLetter savedWarningLetter = warningLetterRepository.save(warningLetter);
 
@@ -112,6 +114,7 @@ public class WarningLetterService {
         warningLetter.setViolation1(request.getViolation1());
         warningLetter.setViolation2(request.getViolation2());
         warningLetter.setSuspensionPeriod(request.getSuspensionPeriod());
+        warningLetter.setAttachment(request.getAttachment());
 
         WarningLetter savedWarningLetter = warningLetterRepository.save(warningLetter);
 

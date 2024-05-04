@@ -29,5 +29,7 @@ public class UpdateWarningLetterRequest {
     private String violation2;
 
     private Date suspensionPeriod;
-    
+
+    private String attachment;
+
 }
