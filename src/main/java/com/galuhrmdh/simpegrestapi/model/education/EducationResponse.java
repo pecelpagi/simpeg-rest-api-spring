@@ -28,4 +28,5 @@ public class EducationResponse {
 
     private String certificateNumber;
 
+    private String attachment;
 }

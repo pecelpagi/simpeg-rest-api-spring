@@ -29,4 +29,6 @@ public class UpdateEducationRequest {
     private String graduationYear;
 
     private String certificateNumber;
+
+    private String attachment;
 }

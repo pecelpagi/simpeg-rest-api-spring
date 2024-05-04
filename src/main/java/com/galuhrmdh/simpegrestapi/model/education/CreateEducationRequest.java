@@ -27,4 +27,6 @@ public class CreateEducationRequest {
     private String graduationYear;
 
     private String certificateNumber;
+
+    private String attachment;
 }

@@ -37,4 +37,5 @@ public class Education {
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     private Employee employee;
 
+    private String attachment;
 }

@@ -50,6 +50,7 @@ public class EducationService {
                 .location(education.getLocation())
                 .graduationYear(education.getGraduationYear())
                 .certificateNumber(education.getCertificateNumber())
+                .attachment(education.getAttachment())
                 .build();
     }
 
@@ -94,6 +95,7 @@ public class EducationService {
         education.setLocation(request.getLocation());
         education.setGraduationYear(request.getGraduationYear());
         education.setCertificateNumber(request.getCertificateNumber());
+        education.setAttachment(request.getAttachment());
 
         Education savedEducation = educationRepository.save(education);
 
@@ -118,6 +120,7 @@ public class EducationService {
         education.setLocation(request.getLocation());
         education.setGraduationYear(request.getGraduationYear());
         education.setCertificateNumber(request.getCertificateNumber());
+        education.setAttachment(request.getAttachment());
 
         Education savedEducation = educationRepository.save(education);
 
