@@ -2,6 +2,7 @@ package com.galuhrmdh.simpegrestapi.repository;
 
 import com.galuhrmdh.simpegrestapi.entity.Employee;
 import com.galuhrmdh.simpegrestapi.entity.EmployeePosition;
+import com.galuhrmdh.simpegrestapi.entity.Parent;
 import com.galuhrmdh.simpegrestapi.model.employee.EmployeeCitizenRecap;
 import com.galuhrmdh.simpegrestapi.model.employee.EmployeeReligionRecap;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
@@ -31,5 +32,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>, Jp
             "(COUNT(e.religion) AS total, e.religion) FROM Employee e " +
             "GROUP BY e.religion")
     List<EmployeeReligionRecap> getEmployeeReligionRecap();
-
 }

@@ -3,6 +3,7 @@ package com.galuhrmdh.simpegrestapi.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.galuhrmdh.simpegrestapi.entity.Parent;
 import com.galuhrmdh.simpegrestapi.model.JobMessage;
 import com.galuhrmdh.simpegrestapi.RabbitMQUtil;
 import com.galuhrmdh.simpegrestapi.entity.Department;
@@ -15,6 +16,7 @@ import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
 import com.galuhrmdh.simpegrestapi.repository.DepartmentRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeePositionRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
+import com.galuhrmdh.simpegrestapi.repository.ParentRepository;
 import jakarta.persistence.criteria.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -42,6 +44,9 @@ public class EmployeeService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private ParentRepository parentRepository;
 
     @Autowired
     private EmployeePositionRepository employeePositionRepository;
@@ -195,5 +200,15 @@ public class EmployeeService {
 
     public List<EmployeeReligionRecap> getEmployeeReligionRecap() {
         return employeeRepository.getEmployeeReligionRecap();
+    }
+
+    public EmployeeDetailResponse getEmployeeDetail(Integer id) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
+        List<Parent> employeeParents = parentRepository.findParentsByEmployee(employee);
+
+        return EmployeeDetailResponse.builder()
+                .employee(employee)
+                .parents(employeeParents)
+                .build();
     }
 }

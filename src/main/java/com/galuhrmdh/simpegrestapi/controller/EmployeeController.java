@@ -100,4 +100,15 @@ public class EmployeeController {
                 .data(employeeReligionRecap)
                 .build();
     }
+
+    @GetMapping(
+            path = "/api/employees/{employeeId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public WebResponse<EmployeeDetailResponse> employeeDetail(User user, @PathVariable("employeeId") Integer employeeId) {
+        EmployeeDetailResponse employeeDetail = employeeService.getEmployeeDetail(employeeId);
+        return WebResponse.<EmployeeDetailResponse>builder()
+                .data(employeeDetail)
+                .build();
+    }
 }
