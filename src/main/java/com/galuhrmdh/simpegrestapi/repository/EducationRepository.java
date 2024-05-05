@@ -1,6 +1,6 @@
 package com.galuhrmdh.simpegrestapi.repository;
 
-import com.galuhrmdh.simpegrestapi.entity.Education;
+import com.galuhrmdh.simpegrestapi.entity.*;
 import com.galuhrmdh.simpegrestapi.model.education.EducationRecap;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -17,5 +17,7 @@ public interface EducationRepository extends JpaRepository<Education, Integer>, 
             "(COUNT(e.educationLevel) AS total, e.educationLevel) FROM Education e " +
             "GROUP BY e.educationLevel")
     public List<EducationRecap> getEducationRecap();
+
+    List<Education> findEducationsByEmployee(Employee employee);
 
 }

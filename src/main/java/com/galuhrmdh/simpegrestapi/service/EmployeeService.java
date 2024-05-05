@@ -3,20 +3,14 @@ package com.galuhrmdh.simpegrestapi.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.galuhrmdh.simpegrestapi.entity.Parent;
+import com.galuhrmdh.simpegrestapi.entity.*;
 import com.galuhrmdh.simpegrestapi.model.JobMessage;
 import com.galuhrmdh.simpegrestapi.RabbitMQUtil;
-import com.galuhrmdh.simpegrestapi.entity.Department;
-import com.galuhrmdh.simpegrestapi.entity.Employee;
-import com.galuhrmdh.simpegrestapi.entity.EmployeePosition;
 import com.galuhrmdh.simpegrestapi.model.ListRequest;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.employee.*;
 import com.galuhrmdh.simpegrestapi.model.employeeposition.EmployeePositionRecap;
-import com.galuhrmdh.simpegrestapi.repository.DepartmentRepository;
-import com.galuhrmdh.simpegrestapi.repository.EmployeePositionRepository;
-import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
-import com.galuhrmdh.simpegrestapi.repository.ParentRepository;
+import com.galuhrmdh.simpegrestapi.repository.*;
 import jakarta.persistence.criteria.Predicate;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -44,6 +38,24 @@ public class EmployeeService {
 
     @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private SpouseRepository spouseRepository;
+
+    @Autowired
+    private ChildrenRepository childrenRepository;
+
+    @Autowired
+    private EducationRepository educationRepository;
+
+    @Autowired
+    private WorkExperienceRepository workExperienceRepository;
+
+    @Autowired
+    private ContractRepository contractRepository;
+
+    @Autowired
+    private WarningLetterRepository warningLetterRepository;
 
     @Autowired
     private ParentRepository parentRepository;
@@ -205,10 +217,22 @@ public class EmployeeService {
     public EmployeeDetailResponse getEmployeeDetail(Integer id) {
         Employee employee = employeeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Data not found"));
         List<Parent> employeeParents = parentRepository.findParentsByEmployee(employee);
+        List<Spouse> employeeSpouses = spouseRepository.findSpousesByEmployee(employee);
+        List<Children> employeeChildren = childrenRepository.findChildrenByEmployee(employee);
+        List<Education> employeeEducations = educationRepository.findEducationsByEmployee(employee);
+        List<WorkExperience> employeeWorkExperience = workExperienceRepository.findWorkExperiencesByEmployee(employee);
+        List<Contract> employeeContracts = contractRepository.findContractsByEmployee(employee);
+        List<WarningLetter> employeeWarningLetters = warningLetterRepository.findWarningLettersByEmployee(employee);
 
         return EmployeeDetailResponse.builder()
                 .employee(employee)
                 .parents(employeeParents)
+                .spouses(employeeSpouses)
+                .children(employeeChildren)
+                .educations(employeeEducations)
+                .workExperiences(employeeWorkExperience)
+                .contracts(employeeContracts)
+                .warningLetters(employeeWarningLetters)
                 .build();
     }
 }

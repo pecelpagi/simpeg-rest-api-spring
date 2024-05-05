@@ -19,4 +19,6 @@ public class ListRequest {
     private Integer size;
 
     private String search;
+
+    private Integer employeeId;
 }

@@ -29,6 +29,7 @@ public class Parent {
 
     private String birthplace;
 
+    @Temporal(TemporalType.DATE)
     private Date birthdate;
 
     @Enumerated(EnumType.STRING)
