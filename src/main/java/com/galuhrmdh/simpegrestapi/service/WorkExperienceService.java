@@ -58,8 +58,21 @@ public class WorkExperienceService {
 
     @Transactional(readOnly = true)
     public Page<WorkExperienceResponse> list(ListRequest request) {
+        Employee employee;
+
+        if (Objects.nonNull(request.getEmployeeId())) {
+            employee = employeeRepository.findById(request.getEmployeeId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee ID is not found"));
+        } else {
+            employee = null;
+        }
+
         Specification<WorkExperience> specification = (root, query, builder) -> {
             List<Predicate> predicates = new ArrayList<>();
+
+            if (Objects.nonNull(employee)) {
+                predicates.add(builder.equal(root.get("employee"), employee));
+            }
 
             if (Objects.nonNull(request.getSearch())) {
                 predicates.add(builder.or(

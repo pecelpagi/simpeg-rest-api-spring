@@ -31,10 +31,12 @@ public class ContractController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<List<ContractResponse>> list(User user,
+                                                    @RequestParam(value = "employeeId", required = false) Integer employeeId,
                                                     @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                                                     @RequestParam(value = "size", required = false, defaultValue = "5") Integer size
     ) {
         ListRequest request = ListRequest.builder()
+                .employeeId(employeeId)
                 .page(page)
                 .size(size)
                 .build();

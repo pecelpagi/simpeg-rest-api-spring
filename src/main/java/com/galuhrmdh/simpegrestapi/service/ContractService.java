@@ -2,6 +2,7 @@ package com.galuhrmdh.simpegrestapi.service;
 
 import com.galuhrmdh.simpegrestapi.entity.Contract;
 import com.galuhrmdh.simpegrestapi.entity.Employee;
+import com.galuhrmdh.simpegrestapi.entity.WorkExperience;
 import com.galuhrmdh.simpegrestapi.model.ListRequest;
 import com.galuhrmdh.simpegrestapi.model.SavedResponse;
 import com.galuhrmdh.simpegrestapi.model.contract.ContractReminderRequest;
@@ -10,18 +11,22 @@ import com.galuhrmdh.simpegrestapi.model.contract.CreateContractRequest;
 import com.galuhrmdh.simpegrestapi.model.contract.UpdateContractRequest;
 import com.galuhrmdh.simpegrestapi.repository.ContractRepository;
 import com.galuhrmdh.simpegrestapi.repository.EmployeeRepository;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class ContractService {
@@ -48,8 +53,27 @@ public class ContractService {
 
     @Transactional(readOnly = true)
     public Page<ContractResponse> list(ListRequest request) {
+        Employee employee;
+
+        if (Objects.nonNull(request.getEmployeeId())) {
+            employee = employeeRepository.findById(request.getEmployeeId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee ID is not found"));
+        } else {
+            employee = null;
+        }
+
+        Specification<Contract> specification = (root, query, builder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (Objects.nonNull(employee)) {
+                predicates.add(builder.equal(root.get("employee"), employee));
+            }
+
+            return query.where(predicates.toArray(new Predicate[]{})).getRestriction();
+        };
+
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize());
-        Page<Contract> contracts = contractRepository.findAll(pageable);
+        Page<Contract> contracts = contractRepository.findAll(specification, pageable);
 
         List<ContractResponse> contractResponses = contracts.stream().map(this::toContractResponse).toList();
 

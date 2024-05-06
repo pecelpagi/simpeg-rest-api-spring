@@ -27,11 +27,13 @@ public class ChildrenController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public WebResponse<List<ChildrenResponse>> list(User user,
+                                                    @RequestParam(value = "employeeId", required = false) Integer employeeId,
                                                     @RequestParam(value = "search", required = false) String search,
                                                     @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
                                                     @RequestParam(value = "size", required = false, defaultValue = "5") Integer size
     ) {
         ListRequest request = ListRequest.builder()
+                .employeeId(employeeId)
                 .search(search)
                 .page(page)
                 .size(size)
